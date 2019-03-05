@@ -15,6 +15,8 @@
 		20A5DDF1222E1A7500C9A165 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A5DDF0222E1A7500C9A165 /* main.m */; };
 		20A5DDFB222E1A7600C9A165 /* SCNetWorkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A5DDFA222E1A7600C9A165 /* SCNetWorkTests.m */; };
 		20A5DE06222E1A7600C9A165 /* SCNetWorkUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A5DE05222E1A7600C9A165 /* SCNetWorkUITests.m */; };
+		20A5DE16222E1E8800C9A165 /* SCNetworkHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A5DE15222E1E8800C9A165 /* SCNetworkHelper.m */; };
+		20A5DE19222E50A900C9A165 /* SCNetworkConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A5DE18222E50A900C9A165 /* SCNetworkConfig.m */; };
 		7CAB9B554BDAA8CF817CE8E3 /* libPods-SCNetWork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D85BD98C05D439C09803EBEE /* libPods-SCNetWork.a */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +54,10 @@
 		20A5DE01222E1A7600C9A165 /* SCNetWorkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SCNetWorkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		20A5DE05222E1A7600C9A165 /* SCNetWorkUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCNetWorkUITests.m; sourceTree = "<group>"; };
 		20A5DE07222E1A7600C9A165 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		20A5DE14222E1E8800C9A165 /* SCNetworkHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCNetworkHelper.h; sourceTree = "<group>"; };
+		20A5DE15222E1E8800C9A165 /* SCNetworkHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCNetworkHelper.m; sourceTree = "<group>"; };
+		20A5DE17222E50A900C9A165 /* SCNetworkConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCNetworkConfig.h; sourceTree = "<group>"; };
+		20A5DE18222E50A900C9A165 /* SCNetworkConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCNetworkConfig.m; sourceTree = "<group>"; };
 		852217B481B3D1A906113CB0 /* Pods-SCNetWork.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SCNetWork.release.xcconfig"; path = "Pods/Target Support Files/Pods-SCNetWork/Pods-SCNetWork.release.xcconfig"; sourceTree = "<group>"; };
 		D85BD98C05D439C09803EBEE /* libPods-SCNetWork.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SCNetWork.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0AB4BB1E767E6F226B67610 /* Pods-SCNetWork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SCNetWork.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SCNetWork/Pods-SCNetWork.debug.xcconfig"; sourceTree = "<group>"; };
@@ -108,6 +114,7 @@
 		20A5DDE0222E1A7400C9A165 /* SCNetWork */ = {
 			isa = PBXGroup;
 			children = (
+				20A5DE13222E1DF700C9A165 /* SCNetworkHelper */,
 				20A5DDE1222E1A7400C9A165 /* AppDelegate.h */,
 				20A5DDE2222E1A7400C9A165 /* AppDelegate.m */,
 				20A5DDE4222E1A7400C9A165 /* ViewController.h */,
@@ -137,6 +144,17 @@
 				20A5DE07222E1A7600C9A165 /* Info.plist */,
 			);
 			path = SCNetWorkUITests;
+			sourceTree = "<group>";
+		};
+		20A5DE13222E1DF700C9A165 /* SCNetworkHelper */ = {
+			isa = PBXGroup;
+			children = (
+				20A5DE14222E1E8800C9A165 /* SCNetworkHelper.h */,
+				20A5DE15222E1E8800C9A165 /* SCNetworkHelper.m */,
+				20A5DE17222E50A900C9A165 /* SCNetworkConfig.h */,
+				20A5DE18222E50A900C9A165 /* SCNetworkConfig.m */,
+			);
+			path = SCNetworkHelper;
 			sourceTree = "<group>";
 		};
 		28C2831645C3C6C675C662CA /* Pods */ = {
@@ -312,9 +330,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20A5DE16222E1E8800C9A165 /* SCNetworkHelper.m in Sources */,
 				20A5DDE6222E1A7400C9A165 /* ViewController.m in Sources */,
 				20A5DDF1222E1A7500C9A165 /* main.m in Sources */,
 				20A5DDE3222E1A7400C9A165 /* AppDelegate.m in Sources */,
+				20A5DE19222E50A900C9A165 /* SCNetworkConfig.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
