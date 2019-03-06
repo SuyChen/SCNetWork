@@ -18,26 +18,47 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U6o-Hm-jPf">
-                                <rect key="frame" x="168.5" y="120" width="38" height="30"/>
-                                <state key="normal" title="请求1"/>
+                                <rect key="frame" x="156.5" y="120" width="62" height="30"/>
+                                <state key="normal" title="请求天气"/>
                                 <connections>
                                     <action selector="SCClickRequest1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xwt-8g-QsP"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J5Q-vI-fBK">
-                                <rect key="frame" x="167.5" y="250" width="40" height="30"/>
-                                <state key="normal" title="请求2"/>
+                                <rect key="frame" x="156.5" y="250" width="62" height="30"/>
+                                <state key="normal" title="请求农历"/>
                                 <connections>
                                     <action selector="SCClickRequest2:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IVB-5V-3eA"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PkQ-1g-U7d">
+                                <rect key="frame" x="156.5" y="380" width="62" height="30"/>
+                                <state key="normal" title="下载视频"/>
+                                <connections>
+                                    <action selector="SCClickDownload:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1i5-2u-Xu5"/>
+                                    <action selector="SCClickRequest2:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wOI-ey-dDT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="owm-xG-c6V">
+                                <rect key="frame" x="156.5" y="510" width="62" height="30"/>
+                                <state key="normal" title="上传资源"/>
+                                <connections>
+                                    <action selector="SCClickDownload:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3rO-ba-FLe"/>
+                                    <action selector="SCClickRequest2:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jxP-Gn-Duv"/>
+                                    <action selector="SCClickUpload:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JhO-eR-9Eg"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="owm-xG-c6V" firstAttribute="top" secondItem="PkQ-1g-U7d" secondAttribute="bottom" constant="100" id="J0u-Ar-V2A"/>
                             <constraint firstItem="J5Q-vI-fBK" firstAttribute="top" secondItem="U6o-Hm-jPf" secondAttribute="bottom" constant="100" id="NZ9-s7-oYM"/>
                             <constraint firstItem="J5Q-vI-fBK" firstAttribute="centerX" secondItem="U6o-Hm-jPf" secondAttribute="centerX" id="Njc-RW-eB2"/>
+                            <constraint firstItem="PkQ-1g-U7d" firstAttribute="centerX" secondItem="J5Q-vI-fBK" secondAttribute="centerX" id="fBd-bj-v7Q"/>
                             <constraint firstItem="U6o-Hm-jPf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="frr-Zf-vR0"/>
+                            <constraint firstItem="owm-xG-c6V" firstAttribute="centerX" secondItem="PkQ-1g-U7d" secondAttribute="centerX" id="vWa-bg-ddo"/>
                             <constraint firstItem="U6o-Hm-jPf" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="vYX-db-Hsj"/>
+                            <constraint firstItem="PkQ-1g-U7d" firstAttribute="top" secondItem="J5Q-vI-fBK" secondAttribute="bottom" constant="100" id="w18-pf-qVM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
