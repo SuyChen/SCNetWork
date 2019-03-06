@@ -32,8 +32,8 @@ const CGFloat SCRequestTimeoutInterval = 15.0f;
 
 - (AFHTTPResponseSerializer *)responseSerializer
 {
-    if (_responseSerializer) {
-        _responseSerializer = [AFHTTPResponseSerializer serializer];
+    if (!_responseSerializer) {
+        _responseSerializer = [AFJSONResponseSerializer serializer];
     }
     return _responseSerializer;
 }

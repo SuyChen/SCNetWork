@@ -54,6 +54,14 @@ typedef void(^SCHttpRequestFailed)(NSError *error);
  */
 typedef void(^SCHttpProgress)(NSProgress *progress);
 
+
+/**
+ 将默认的配置给到外面
+
+ @param configuration 默认配置类
+ */
+typedef void(^configurationHandler)(SCNetworkConfig *configuration);
+
 @interface SCNetworkHelper : NSObject
 /**
  当前的网络状态
@@ -73,20 +81,20 @@ typedef void(^SCHttpProgress)(NSProgress *progress);
 /**
  网络请求主要方法
 
- @param method 请求类型
+ @param method 请求类型 默认为GET
  @param URLString URL地址，不包含baseURL
  @param parameters 请求参数
- @param configurationHandler 配置请求
+ @param config 配置请求
  @param success 请求成功
  @param failure 请求失败
  @return 返回该请求的任务管理者，用于取消该次请求
  */
-- (NSURLSessionDataTask *_Nullable)requestMethod:(SCRequestMethod)method
+- (NSURLSessionDataTask *)requestMethod:(SCRequestMethod)method
                                        URLString:(NSString *_Nullable)URLString
                                       parameters:(NSDictionary *_Nullable)parameters
-                            configurationHandler:(void (^_Nullable)(SCNetworkConfig * _Nullable configuration))configurationHandler
-                                         success:(SCHttpRequestSuccess _Nullable )success
-                                         failure:(SCHttpRequestFailed _Nullable )failure;
+                            configurationHandler:(configurationHandler _Nullable)config
+                                         success:(SCHttpRequestSuccess _Nullable)success
+                                         failure:(SCHttpRequestFailed _Nullable)failure;
 
 
 /**
@@ -95,16 +103,16 @@ typedef void(^SCHttpProgress)(NSProgress *progress);
  @param URLString URL地址，不包含baseURL
  @param parameters 请求参数
  @param uploadData 要上传的资源，这里没有区分上传文件还是图片，可以自定义
- @param configurationHandler 配置请求
+ @param config 配置请求
  @param progress 上传进度
  @param success 请求成功
  @param failure 请求失败
  @return 返回的对象可取消请求,调用cancel方法
  */
-- (NSURLSessionTask *_Nullable)uploadWithURLString:(NSString *_Nullable)URLString
+- (NSURLSessionTask *)uploadWithURLString:(NSString *_Nullable)URLString
                                         parameters:(NSDictionary *_Nullable)parameters
                          constructingBodyWithBlock:(void (^_Nullable)(id <AFMultipartFormData> _Nullable formData))uploadData
-                              configurationHandler:(void (^_Nullable)(SCNetworkConfig * _Nullable configuration))configurationHandler
+                              configurationHandler:(configurationHandler _Nullable)config
                                           progress:(SCHttpProgress _Nullable)progress
                                            success:(SCHttpRequestSuccess _Nullable )success
                                            failure:(SCHttpRequestFailed _Nullable )failure;
@@ -117,21 +125,21 @@ typedef void(^SCHttpProgress)(NSProgress *progress);
  @param parameters 请求参数
  @param name 文件对应服务器上的字段
  @param filePath 文件本地的沙盒路径
- @param configurationHandler 配置请求
+ @param config 配置请求
  @param progress 上传进度
  @param success 请求成功
  @param failure 请求失败
  @return 返回的对象可取消请求,调用cancel方法
  */
 
-- (NSURLSessionTask *_Nullable)uploadFileWithURLString:(NSString *_Nullable)URLString
-                                        parameters:(NSDictionary *_Nullable)parameters
-                                              name:(NSString *)name
-                                          filePath:(NSString *)filePath
-                                  configurationHandler:(void (^_Nullable)(SCNetworkConfig * _Nullable configuration))configurationHandler
-                                          progress:(SCHttpProgress)progress
-                                           success:(SCHttpRequestSuccess)success
-                                           failure:(SCHttpRequestFailed)failure;
+- (NSURLSessionTask *)uploadFileWithURLString:(NSString *_Nullable)URLString
+                                            parameters:(NSDictionary *_Nullable)parameters
+                                                  name:(NSString *)name
+                                              filePath:(NSString *)filePath
+                                  configurationHandler:(configurationHandler _Nullable)config
+                                              progress:(SCHttpProgress)progress
+                                               success:(SCHttpRequestSuccess)success
+                                               failure:(SCHttpRequestFailed)failure;
 
 
 /**
@@ -144,38 +152,38 @@ typedef void(^SCHttpProgress)(NSProgress *progress);
  @param fileNames 图片文件名数组, 可以为nil, 数组内的文件名默认为当前日期时间"yyyyMMddHHmmss"
  @param imageScale 图片文件压缩比 范围 (0.f ~ 1.f)
  @param imageType 图片文件的类型,例:png、jpg(默认类型)....
- @param configurationHandler 配置请求
+ @param config 配置请求
  @param progress 上传进度
  @param success 请求成功
  @param failure 请求失败
  @return 返回的对象可取消请求,调用cancel方法
  */
-- (NSURLSessionTask *_Nullable)uploadImagesWithURLString:(NSString *_Nullable)URLString
-                                            parameters:(NSDictionary *_Nullable)parameters
-                                                  name:(NSString *)name
-                                                images:(NSArray<UIImage *> *)images
-                                             fileNames:(NSArray<NSString *> *)fileNames
-                                            imageScale:(CGFloat)imageScale
-                                             imageType:(NSString *)imageType
-                                  configurationHandler:(void (^_Nullable)(SCNetworkConfig * _Nullable configuration))configurationHandler
-                                              progress:(SCHttpProgress)progress
-                                               success:(SCHttpRequestSuccess)success
-                                               failure:(SCHttpRequestFailed)failure;
+- (NSURLSessionTask *)uploadImagesWithURLString:(NSString *_Nullable)URLString
+                                              parameters:(NSDictionary *_Nullable)parameters
+                                                    name:(NSString *)name
+                                                  images:(NSArray<UIImage *> *)images
+                                               fileNames:(NSArray<NSString *> *)fileNames
+                                              imageScale:(CGFloat)imageScale
+                                               imageType:(NSString *)imageType
+                                    configurationHandler:(configurationHandler _Nullable)config
+                                                progress:(SCHttpProgress)progress
+                                                 success:(SCHttpRequestSuccess)success
+                                                 failure:(SCHttpRequestFailed)failure;
 
 /**
  下载资源
  
  @param URLString URL地址，不包含baseURL
  @param fileDirectory 文件存储目录(默认存储目录为Download)
- @param configurationHandler 配置请求
+ @param config 配置请求
  @param progress 下载进度
  @param success 请求成功
  @param failure 请求失败
  @return 返回该请求的任务管理者，用于取消该次请求
  */
-- (NSURLSessionTask *_Nullable)downloadWithURLString:(NSString *_Nullable)URLString
+- (NSURLSessionTask *)downloadWithURLString:(NSString *_Nullable)URLString
                                        fileDirectory:(NSString *)fileDirectory
-                                configurationHandler:(void (^_Nullable)(SCNetworkConfig * _Nullable configuration))configurationHandler
+                                configurationHandler:(configurationHandler _Nullable)config
                                             progress:(SCHttpProgress)progress
                                              success:(SCHttpRequestSuccess)success
                                              failure:(SCHttpRequestFailed)failure;

@@ -9,7 +9,6 @@
 #import "SCNetworkHelper.h"
 #import "SCNetworkConfig.h"
 
-
 @interface SCNetworkHelper ()
 /**
  是AFURLSessionManager的子类，为HTTP的一些请求提供了便利方法，当提供baseURL时，请求只需要给出请求的路径即可
@@ -32,7 +31,7 @@
     });
     return instance;
 }
-
+#pragma mark == 初始化
 - (instancetype)init
 {
     self = [super init];
@@ -76,11 +75,11 @@
 - (NSURLSessionDataTask *)requestMethod:(SCRequestMethod)method
                               URLString:(NSString *)URLString
                              parameters:(NSDictionary *)parameters
-                   configurationHandler:(void (^)(SCNetworkConfig * _Nullable))configurationHandler
+                   configurationHandler:(configurationHandler)config
                                 success:(SCHttpRequestSuccess)success
                                 failure:(SCHttpRequestFailed)failure
 {
-    SCNetworkConfig *configuration = [self disposeConfiguration:configurationHandler];
+    SCNetworkConfig *configuration = [self disposeConfiguration:config];
     
     if (!URLString) {
         URLString = @"";
@@ -108,23 +107,28 @@
                                                   if (error) {
                                                       failure(error);
                                                   }else{
+                                                      
+                                                      //将返回的数据做一层数据拦截
+                                                      if (configuration.resposeHandle) {
+                                                          responseObject = configuration.resposeHandle(dataTask, responseObject);
+                                                      }
                                                       success(responseObject);
                                                   }
                                                   
                                               }];
     [dataTask resume];
     return dataTask;
+    
 }
-
-- (NSURLSessionTask *)uploadWithURLString:(NSString *)URLString
-                               parameters:(NSDictionary *)parameters
-                constructingBodyWithBlock:(void (^)(id<AFMultipartFormData> _Nullable))uploadData
-                     configurationHandler:(void (^)(SCNetworkConfig * _Nullable))configurationHandler
-                                 progress:(SCHttpProgress)progress
-                                  success:(SCHttpRequestSuccess)success
-                                  failure:(SCHttpRequestFailed)failure
+- (NSURLSessionTask *)uploadWithURLString:(NSString *_Nullable)URLString
+                                        parameters:(NSDictionary *_Nullable)parameters
+                         constructingBodyWithBlock:(void (^_Nullable)(id <AFMultipartFormData> _Nullable formData))uploadData
+                              configurationHandler:(configurationHandler _Nullable)config
+                                          progress:(SCHttpProgress _Nullable)progress
+                                           success:(SCHttpRequestSuccess _Nullable )success
+                                           failure:(SCHttpRequestFailed _Nullable )failure
 {
-    SCNetworkConfig *configuration = [self disposeConfiguration:configurationHandler];
+    SCNetworkConfig *configuration = [self disposeConfiguration:config];
     parameters = [self disposeRequestParameters:parameters];
     NSString *requestUrl = [[NSURL URLWithString:URLString relativeToURL:[NSURL URLWithString: configuration.baseURL]] absoluteString];
     NSURLSessionDataTask *dataTask = [self.requestManager POST:requestUrl parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
@@ -140,16 +144,16 @@
     return dataTask;
 }
 
-- (NSURLSessionTask *)uploadFileWithURLString:(NSString *)URLString
-                                   parameters:(NSDictionary *)parameters
+- (NSURLSessionTask *)uploadFileWithURLString:(NSString *_Nullable)URLString
+                                   parameters:(NSDictionary *_Nullable)parameters
                                          name:(NSString *)name
                                      filePath:(NSString *)filePath
-                         configurationHandler:(void (^)(SCNetworkConfig * _Nullable))configurationHandler
+                         configurationHandler:(configurationHandler _Nullable)config
                                      progress:(SCHttpProgress)progress
                                       success:(SCHttpRequestSuccess)success
                                       failure:(SCHttpRequestFailed)failure
 {
-    SCNetworkConfig *configuration = [self disposeConfiguration:configurationHandler];
+    SCNetworkConfig *configuration = [self disposeConfiguration:config];
     parameters = [self disposeRequestParameters:parameters];
     NSString *requestUrl = [[NSURL URLWithString:URLString relativeToURL:[NSURL URLWithString: configuration.baseURL]] absoluteString];
     NSURLSessionDataTask *dataTask = [self.requestManager POST:requestUrl parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
@@ -169,16 +173,19 @@
     return dataTask;
 }
 
-- (NSURLSessionTask *)uploadImagesWithURLString:(NSString *)URLString
-                                     parameters:(NSDictionary *)parameters
+- (NSURLSessionTask *)uploadImagesWithURLString:(NSString *_Nullable)URLString
+                                     parameters:(NSDictionary *_Nullable)parameters
                                            name:(NSString *)name
                                          images:(NSArray<UIImage *> *)images
                                       fileNames:(NSArray<NSString *> *)fileNames
                                      imageScale:(CGFloat)imageScale
                                       imageType:(NSString *)imageType
-                           configurationHandler:(void (^)(SCNetworkConfig * _Nullable))configurationHandler progress:(SCHttpProgress)progress success:(SCHttpRequestSuccess)success failure:(SCHttpRequestFailed)failure
+                           configurationHandler:(configurationHandler _Nullable)config
+                                       progress:(SCHttpProgress)progress
+                                        success:(SCHttpRequestSuccess)success
+                                        failure:(SCHttpRequestFailed)failure
 {
-    SCNetworkConfig *configuration = [self disposeConfiguration:configurationHandler];
+    SCNetworkConfig *configuration = [self disposeConfiguration:config];
     parameters = [self disposeRequestParameters:parameters];
     NSString *requestUrl = [[NSURL URLWithString:URLString relativeToURL:[NSURL URLWithString: configuration.baseURL]] absoluteString];
     NSURLSessionDataTask *dataTask = [self.requestManager POST:requestUrl parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
@@ -210,17 +217,17 @@
     return dataTask;
 }
 
-- (NSURLSessionTask *)downloadWithURLString:(NSString *)URLString
+- (NSURLSessionTask *)downloadWithURLString:(NSString *_Nullable)URLString
                               fileDirectory:(NSString *)fileDirectory
-                       configurationHandler:(void (^)(SCNetworkConfig * _Nullable))configurationHandler
+                       configurationHandler:(configurationHandler _Nullable)config
                                    progress:(SCHttpProgress)progress
                                     success:(SCHttpRequestSuccess)success
                                     failure:(SCHttpRequestFailed)failure
 {
-    SCNetworkConfig *configuration = [self disposeConfiguration:configurationHandler];
+    SCNetworkConfig *configuration = [self disposeConfiguration:config];
     NSString *requestUrl = [[NSURL URLWithString:URLString relativeToURL:[NSURL URLWithString: configuration.baseURL]] absoluteString];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
-    NSURLSessionDataTask *dataTask = [self.requestManager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+   __block NSURLSessionDownloadTask *dataTask = [self.requestManager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
          progress(downloadProgress);
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         
@@ -239,6 +246,9 @@
         if (error) {
             failure(error);
         }else{
+            if (configuration.resposeHandle) {
+                filePath = configuration.resposeHandle(dataTask, filePath);
+            }
             success(filePath);
         }
     }];
@@ -271,15 +281,15 @@
 /**
  这里把通过属性设置的请求配置和传值过来的配置做统一处理 传值的优先级更高
 
- @param configurationHandler 传值的请求配置
+ @param config 传值的请求配置
  @return 处理后的配置
  */
-- (SCNetworkConfig *)disposeConfiguration:(void (^_Nullable)(SCNetworkConfig * _Nullable configuration))configurationHandler {
+- (SCNetworkConfig *)disposeConfiguration:(configurationHandler)config {
  
     SCNetworkConfig *configuration = [self.configuration copy];
     //block回调设置configuration
-    if (configurationHandler) {
-        configurationHandler(configuration);
+    if (config) {
+        config(configuration);
     }
     self.requestManager.requestSerializer = configuration.requestSerializer;
     self.requestManager.responseSerializer = configuration.responseSerializer;
