@@ -8,6 +8,7 @@
 
 #import "SCNetworkHelper.h"
 #import "SCNetworkConfig.h"
+#import "SCNetworkCache.h"
 
 @interface SCNetworkHelper ()
 /**
@@ -86,8 +87,25 @@
     }
     
     NSString *requestUrl = [[NSURL URLWithString:URLString relativeToURL:[NSURL URLWithString:configuration.baseURL]] absoluteString];
-    
     parameters = [self disposeRequestParameters:parameters];
+    
+    //取缓存
+    if (configuration.requestCachePolicy == SCCachePolicyCacheOrLoad) {
+        //直接返回缓存
+        id resposeObject = [SCNetworkCache getHttpCacheForCacheValidTime:configuration.resultCacheDuration URLString:URLString parameters:parameters];
+        if (resposeObject) {
+            success(resposeObject);
+            return nil;
+        }
+    }
+    
+    //存数据
+    void (^ saveCacheRespose)(id responseObject) = ^(id responseObject) {
+        if (configuration.resultCacheDuration > 0) {
+            [SCNetworkCache setHttpCache:responseObject URLString:URLString parameters:parameters];
+        }
+    };
+    
     
     //防止数组越界
     if (method > self.methodMap.count - 1) {
@@ -107,7 +125,9 @@
                                                   if (error) {
                                                       failure(error);
                                                   }else{
-                                                      
+                                                      if (configuration.requestCachePolicy == SCCachePolicyCacheOrLoad) {
+                                                          saveCacheRespose(responseObject);
+                                                      }
                                                       //将返回的数据做一层数据拦截
                                                       if (configuration.resposeHandle) {
                                                           responseObject = configuration.resposeHandle(dataTask, responseObject);
@@ -121,12 +141,12 @@
     
 }
 - (NSURLSessionTask *)uploadWithURLString:(NSString *_Nullable)URLString
-                                        parameters:(NSDictionary *_Nullable)parameters
-                         constructingBodyWithBlock:(void (^_Nullable)(id <AFMultipartFormData> _Nullable formData))uploadData
-                              configurationHandler:(configurationHandler _Nullable)config
-                                          progress:(SCHttpProgress _Nullable)progress
-                                           success:(SCHttpRequestSuccess _Nullable )success
-                                           failure:(SCHttpRequestFailed _Nullable )failure
+                               parameters:(NSDictionary *_Nullable)parameters
+                constructingBodyWithBlock:(void (^_Nullable)(id <AFMultipartFormData> _Nullable formData))uploadData
+                     configurationHandler:(configurationHandler _Nullable)config
+                                 progress:(SCHttpProgress _Nullable)progress
+                                  success:(SCHttpRequestSuccess _Nullable )success
+                                  failure:(SCHttpRequestFailed _Nullable )failure
 {
     SCNetworkConfig *configuration = [self disposeConfiguration:config];
     parameters = [self disposeRequestParameters:parameters];
@@ -175,7 +195,7 @@
 
 - (NSURLSessionTask *)uploadImagesWithURLString:(NSString *_Nullable)URLString
                                      parameters:(NSDictionary *_Nullable)parameters
-                                           name:(NSString *)name
+                                          names:(NSArray *)names
                                          images:(NSArray<UIImage *> *)images
                                       fileNames:(NSArray<NSString *> *)fileNames
                                      imageScale:(CGFloat)imageScale
@@ -201,7 +221,7 @@
             NSString *imageFileName = [NSString stringWithFormat:@"%@%ld.%@",str,i,imageType?:@"jpg"];
             
             [formData appendPartWithFileData:imageData
-                                        name:name
+                                        name:[names objectAtIndex:i]
                                     fileName:fileNames ?  [NSString stringWithFormat:@"%@.%@",fileNames[i],imageType?:@"jpg"] : imageFileName
                                     mimeType:[NSString stringWithFormat:@"image/%@",imageType ?: @"jpg"]];
         }
@@ -227,8 +247,8 @@
     SCNetworkConfig *configuration = [self disposeConfiguration:config];
     NSString *requestUrl = [[NSURL URLWithString:URLString relativeToURL:[NSURL URLWithString: configuration.baseURL]] absoluteString];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestUrl]];
-   __block NSURLSessionDownloadTask *dataTask = [self.requestManager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
-         progress(downloadProgress);
+    __block NSURLSessionDownloadTask *dataTask = [self.requestManager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+        progress(downloadProgress);
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         
         //拼接缓存目录
@@ -263,7 +283,7 @@
 
 /**
  这里把通过属性设置的请求体和传值过来的请求体做了统一处理
-
+ 
  @param parameters 传值的请求体
  @return 处理后的请求体
  */
@@ -280,12 +300,12 @@
 
 /**
  这里把通过属性设置的请求配置和传值过来的配置做统一处理 传值的优先级更高
-
+ 
  @param config 传值的请求配置
  @return 处理后的配置
  */
 - (SCNetworkConfig *)disposeConfiguration:(configurationHandler)config {
- 
+    
     SCNetworkConfig *configuration = [self.configuration copy];
     //block回调设置configuration
     if (config) {

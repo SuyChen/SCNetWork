@@ -17,6 +17,7 @@
 		20A5DE06222E1A7600C9A165 /* SCNetWorkUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A5DE05222E1A7600C9A165 /* SCNetWorkUITests.m */; };
 		20A5DE16222E1E8800C9A165 /* SCNetworkHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A5DE15222E1E8800C9A165 /* SCNetworkHelper.m */; };
 		20A5DE19222E50A900C9A165 /* SCNetworkConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A5DE18222E50A900C9A165 /* SCNetworkConfig.m */; };
+		20BE8DB02230B21E00B5C389 /* SCNetworkCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BE8DAF2230B21E00B5C389 /* SCNetworkCache.m */; };
 		7CAB9B554BDAA8CF817CE8E3 /* libPods-SCNetWork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D85BD98C05D439C09803EBEE /* libPods-SCNetWork.a */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,8 @@
 		20A5DE15222E1E8800C9A165 /* SCNetworkHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCNetworkHelper.m; sourceTree = "<group>"; };
 		20A5DE17222E50A900C9A165 /* SCNetworkConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCNetworkConfig.h; sourceTree = "<group>"; };
 		20A5DE18222E50A900C9A165 /* SCNetworkConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCNetworkConfig.m; sourceTree = "<group>"; };
+		20BE8DAE2230B21E00B5C389 /* SCNetworkCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCNetworkCache.h; sourceTree = "<group>"; };
+		20BE8DAF2230B21E00B5C389 /* SCNetworkCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCNetworkCache.m; sourceTree = "<group>"; };
 		20FB9596222F6AF200F4E846 /* SCNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCNetworking.h; sourceTree = "<group>"; };
 		852217B481B3D1A906113CB0 /* Pods-SCNetWork.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SCNetWork.release.xcconfig"; path = "Pods/Target Support Files/Pods-SCNetWork/Pods-SCNetWork.release.xcconfig"; sourceTree = "<group>"; };
 		D85BD98C05D439C09803EBEE /* libPods-SCNetWork.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SCNetWork.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -155,6 +158,8 @@
 				20A5DE15222E1E8800C9A165 /* SCNetworkHelper.m */,
 				20A5DE17222E50A900C9A165 /* SCNetworkConfig.h */,
 				20A5DE18222E50A900C9A165 /* SCNetworkConfig.m */,
+				20BE8DAE2230B21E00B5C389 /* SCNetworkCache.h */,
+				20BE8DAF2230B21E00B5C389 /* SCNetworkCache.m */,
 			);
 			path = SCNetworkHelper;
 			sourceTree = "<group>";
@@ -335,6 +340,7 @@
 				20A5DE16222E1E8800C9A165 /* SCNetworkHelper.m in Sources */,
 				20A5DDE6222E1A7400C9A165 /* ViewController.m in Sources */,
 				20A5DDF1222E1A7500C9A165 /* main.m in Sources */,
+				20BE8DB02230B21E00B5C389 /* SCNetworkCache.m in Sources */,
 				20A5DDE3222E1A7400C9A165 /* AppDelegate.m in Sources */,
 				20A5DE19222E50A900C9A165 /* SCNetworkConfig.m in Sources */,
 			);

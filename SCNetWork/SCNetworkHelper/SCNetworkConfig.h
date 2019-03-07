@@ -18,14 +18,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern const CGFloat SCRequestTimeoutInterval;
 
+typedef NS_ENUM(NSUInteger, SCCachePolicy) {
+    //先检查是否有缓存，没有则请求数据并缓存
+    SCCachePolicyCacheOrLoad,
+    //直接请求数据不做缓存
+    SCCachePolicyLoadWithoutCache,
+    //可扩展新的缓存策略
+    SCCachePolicyWaitToADD
+    
+};
+
 /**
-  网络请求配置类
+ 网络请求配置类
  */
 @interface SCNetworkConfig : NSObject
 /**
- 所有请求都带的前缀
+ 所有请求都带的前缀 也可以直接写在urlstring里面
  */
-@property (nonatomic, copy) NSString *baseURL;
+@property (nonatomic, copy, nullable) NSString *baseURL;
 /**
  请求的一些配置（默认不变的信息），比如：缓存机制、请求超时、请求头信息等配置
  */
@@ -50,7 +60,14 @@ extern const CGFloat SCRequestTimeoutInterval;
  对请求返回的数据做统一的处理，比如token失效、重新登录等等操作。
  */
 @property (nonatomic, copy) id (^ resposeHandle)(NSURLSessionTask *dataTask, id responseObject);
-
+/**
+ 设置缓存时间，默认86400秒（24小时）。如果 <= 0，表示不启用缓存。单位为秒，表示对于一个请求的结果缓存多长时间
+ */
+@property (nonatomic, assign) NSInteger resultCacheDuration;
+/**
+ 缓存策略, 默认是SCCachePolicyCacheOrLoad
+ */
+@property (nonatomic, assign) SCCachePolicy requestCachePolicy;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -17,6 +17,8 @@ const CGFloat SCRequestTimeoutInterval = 15.0f;
     self = [super init];
     if (self) {
         _timeoutInterval = SCRequestTimeoutInterval;
+        _requestCachePolicy = SCCachePolicyCacheOrLoad;
+        _resultCacheDuration = 86400;
     }
     return self;
 }
@@ -40,6 +42,8 @@ const CGFloat SCRequestTimeoutInterval = 15.0f;
 
 - (instancetype)copyWithZone:(NSZone *)zone {
     SCNetworkConfig *configuration = [[SCNetworkConfig alloc] init];
+    configuration.resultCacheDuration = self.resultCacheDuration;
+    configuration.requestCachePolicy = self.requestCachePolicy;
     configuration.baseURL = [self.baseURL copy];
     configuration.builtinHeaders = [self.builtinHeaders copy];
     configuration.builtinBodys = [self.builtinBodys copy];

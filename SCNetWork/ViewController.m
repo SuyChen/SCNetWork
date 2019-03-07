@@ -57,7 +57,7 @@
     
     [self.requestConvertManager downloadWithURLString:@"https://mp4.facecast.xyz/storage1/M05/08/26/aPODC1xGD_-AR9FDAEVnvP77jbU565.mp4" fileDirectory:@"music" configurationHandler:^(SCNetworkConfig * _Nonnull configuration) {
         
-        configuration.baseURL = @"";
+        configuration.baseURL = nil;
         
     } progress:^(NSProgress * _Nonnull progress) {
         
