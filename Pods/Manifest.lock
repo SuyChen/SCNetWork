@@ -14,21 +14,25 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
+  - SCNetWork (0.0.1):
+    - AFNetworking (~> 3.2.1)
+    - YYCache (~> 1.0.4)
   - YYCache (1.0.4)
 
 DEPENDENCIES:
-  - AFNetworking (~> 3.2.1)
-  - YYCache (~> 1.0.4)
+  - SCNetWork (~> 0.0.1)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
+    - SCNetWork
     - YYCache
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  SCNetWork: fd289f7e5636edb85810162a091734b512281484
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
 
-PODFILE CHECKSUM: c12061ef229bae8e67c80cf11d2e62c6286a4ebe
+PODFILE CHECKSUM: 24585a379508318c7afd1ba0246296fb2ca1e123
 
 COCOAPODS: 1.5.3
