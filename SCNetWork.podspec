@@ -17,8 +17,7 @@ Pod::Spec.new do |s|
   # s.social_media_url   = "https://github.com/SuyChen/SCNetWork"
   s.platform     = :ios, "9.0"
   s.source       = { :git => "https://github.com/SuyChen/SCNetWork.git", :tag => "#{s.version}" }
-  s.source_files  = "SCNetWork", "SCNetWork/SCNetworkHelper/*.{h,m}"
-  s.public_header_files = "SCNetWork/**/*.h"
+  s.source_files  = "SCNetworkHelper/*.{h,m}"
   s.requires_arc = true
   s.dependency 'AFNetworking', '~> 3.2.1'
   s.dependency 'YYCache', '~> 1.0.4'
