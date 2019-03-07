@@ -19,7 +19,7 @@
 在你工程的 `Podfile` 文件中添加如下一行，并执行 `pod install` 或 `pod update`。
 
 ```
-pod 'SCNetWork', '~> 0.0.1'
+pod 'SCNetWork', '~> 0.0.2'
 ```
 
 **注意：** `XMNetworking` 会自动依赖 `AFNetworking`  和 `YYCache` ，所以你工程里的 `Podfile` 文件**无需**再添加 。
