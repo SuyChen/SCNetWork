@@ -3,6 +3,7 @@
 
 target 'SCNetWork' do
  
-pod 'SCNetWork', '~> 0.0.1'
+pod 'AFNetworking', '~> 3.2.1'
+pod 'YYCache', '~> 1.0.4'
 
 end
