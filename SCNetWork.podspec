@@ -10,18 +10,17 @@ Pod::Spec.new do |s|
 
   s.name         = "SCNetWork"
   s.version      = "0.0.1"
-  s.ios.deployment_target = "8.0"
   s.summary      = "基于AFN3.2.1网络请求封装，实现网络请求，上传，下载功能。基于YYCache，实现数据缓存。"
   s.homepage     = "https://github.com/SuyChen/SCNetWork"
   s.license      = "MIT"
-  # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
   s.author             = { "SuyChen" => "286092964@qq.com" }
   # s.social_media_url   = "https://github.com/SuyChen/SCNetWork"
-  s.platform     = :ios
+  s.platform     = :ios, "9.0"
   s.source       = { :git => "https://github.com/SuyChen/SCNetWork.git", :tag => "#{s.version}" }
-  s.source_files  = "SCNetWork", "SCNetWork/SCNetworkHelper/**/*.{h,m}"
+  s.source_files  = "SCNetWork", "SCNetWork/SCNetworkHelper/*.{h,m}"
   s.public_header_files = "SCNetWork/**/*.h"
-  s.dependency 'AFNetworking'
-  s.dependency 'YYCache'
+  s.requires_arc = true
+  s.dependency 'AFNetworking', '~> 3.2.1'
+  s.dependency 'YYCache', '~> 1.0.4'
 
 end

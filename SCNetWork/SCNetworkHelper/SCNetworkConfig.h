@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern const CGFloat SCRequestTimeoutInterval;
 
-typedef NS_ENUM(NSUInteger, SCCachePolicy) {
+typedef NS_ENUM(NSInteger, SCCachePolicy) {
     //先检查是否有缓存，没有则请求数据并缓存
     SCCachePolicyCacheOrLoad,
     //直接请求数据不做缓存
