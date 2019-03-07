@@ -62,12 +62,15 @@ typedef NS_ENUM(NSUInteger, SCCachePolicy) {
 @property (nonatomic, copy) id (^ resposeHandle)(NSURLSessionTask *dataTask, id responseObject);
 /**
  设置缓存时间，默认86400秒（24小时）。如果 <= 0，表示不启用缓存。单位为秒，表示对于一个请求的结果缓存多长时间
+ 如果需要根据请求内容做缓存更新的话需要跟后台商议
  */
 @property (nonatomic, assign) NSInteger resultCacheDuration;
 /**
  缓存策略, 默认是SCCachePolicyCacheOrLoad
  */
 @property (nonatomic, assign) SCCachePolicy requestCachePolicy;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

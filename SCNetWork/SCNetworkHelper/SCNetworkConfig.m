@@ -53,4 +53,6 @@ const CGFloat SCRequestTimeoutInterval = 15.0f;
     configuration.responseSerializer.acceptableContentTypes = self.responseSerializer.acceptableContentTypes;
     return configuration;
 }
+
+
 @end
