@@ -31,4 +31,4 @@ Wechat：v268743
 
 ## License
 
-The SCJigsawPuzzle project is available for free use, as described by the LICENSE (Apache 2.0).
+The SCNetWork project is available for free use, as described by the LICENSE (Apache 2.0).
